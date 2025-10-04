@@ -1,0 +1,17 @@
+services:
+  gitbackup:
+    image: python:latest
+    container_name: gitbackup
+    environment:
+      GIT_REPOS: |
+        https://github.com/davidedg/gitbackup.git
+        https://github.com/davidedg/webgyb.git
+      GITHUB_USERS: |
+        davidedg
+    volumes:
+      - ./gitbackup.bash:/gitbackup.bash:ro
+      - ./repos:/repos
+    entrypoint: []
+    command: bash -c "while true; do bash /gitbackup.bash ; sleep 7200 ; done"
+    init: true
+    restart: "unless-stopped"
